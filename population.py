@@ -25,7 +25,17 @@ def DiagramData():
     plt.title('Динамика численности населения по субъектам РФ')
     plt.show()
 
-
+# поиск субъекта с наибольшим снижением численности населения
+def PopulationData():
+    data['Разница'] = data['2022 г.'] - data['2008 г.']
+    data_sorted = data.sort_values(by='Разница', ascending=True)
+    max_difference_subject = data_sorted.iloc[0]['Субъекты РФ/Год']
+    difference_2008_2022 = data_sorted.iloc[0]['Разница']
+    result_window = tk.Toplevel(root)
+    result_window.title("Результаты")
+    result_window.geometry("500x100")
+    result_label = tk.Label(result_window, text=f"Субъект РФ с наибольшим снижением численности населения: {max_difference_subject}\nРазница населения между 2008 и 2022 годами: {difference_2008_2022}")
+    result_label.pack()
 
 # Графический интерфейс
 root = tk.Tk()
