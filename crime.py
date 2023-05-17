@@ -36,12 +36,28 @@ def select_file():
     info_table.insert(tk.END, data.to_string(index=False))
     info_table.pack()
 
+def CrimeChange():
+    file = pd.read_excel('crime.xlsx')
+    df = pd.DataFrame(file)
+    prestupnost = df.iloc[:, 1:16]
+    prestupnost_change = prestupnost.apply(lambda x: (x.iloc[-1] - x.iloc[0]) / x.iloc[0] * 100, axis=1)
+    max_change = prestupnost_change.idxmax()
+    min_change = prestupnost_change.idxmin()
+    max_change_percent = prestupnost_change[max_change]
+    min_change_percent = prestupnost_change[min_change]
+    max_change_crime = df.loc[max_change, 'Статья УК РФ']
+    min_change_crime = df.loc[min_change, 'Статья УК РФ']
+    tk.messagebox.showinfo("Самое большое изменение", f"{max_change_crime} снизилось на {max_change_percent:.2f}%")
+    tk.messagebox.showinfo("Самое маленькое изменение", f"{min_change_crime} снизилось на {min_change_percent:.2f}%")
+
 root = tk.Tk()
 root.title("Программа для вывода информации из файла в Excel")
 file_button = tk.Button(root, text="Открыть таблицу", command=select_file)
 file_button.pack(padx=10, pady=10)
 diagram_button = tk.Button(root, text='Показать диаграмму', command=DiagramData)
 diagram_button.pack(padx=30, pady=10)
+crime_change_button = tk.Button(root, text='Показать изменение преступности', command=CrimeChange)
+crime_change_button.pack(padx=20, pady=10)
 exit_button = tk.Button(root, text='Закрыть', command=root.destroy)
 exit_button.pack(padx=20, pady=10)
 root.mainloop()
