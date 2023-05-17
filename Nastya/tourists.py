@@ -75,6 +75,5 @@ def main():
     exit_button.pack(padx=40, pady=10)
     root.mainloop()
 
-
 if __name__ == '__main__':
     main()
