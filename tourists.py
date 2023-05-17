@@ -64,3 +64,17 @@ def main():
         result_window.geometry("500x100")
         result_label = tk.Label(result_window, text=result_str, font=("Arial", 12))
         result_label.pack(pady=20)
+
+    file_button = tk.Button(root, text="Открыть таблицу", command=select_file)
+    exit_button = tk.Button(root, text='Закрыть', command=root.destroy)
+    diagram_button = tk.Button(root, text='Показать диаграмму', command=DiagramData)
+    max_button = tk.Button(root, text="Максимальное число туристов", command=max_tourists)
+    file_button.pack(padx=10, pady=10)
+    diagram_button.pack(padx=20, pady=10)
+    max_button.pack(padx=30, pady=10)
+    exit_button.pack(padx=40, pady=10)
+    root.mainloop()
+
+
+if __name__ == '__main__':
+    main()
