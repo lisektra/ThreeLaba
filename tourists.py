@@ -34,3 +34,33 @@ def main():
         plt.tight_layout()
         plt.get_current_fig_manager().window.state('zoomed')
         plt.show()
+
+    def select_file():
+        data = pd.read_excel('число въездных поездок в Россию.xlsx')
+        info_window = tk.Toplevel(root)
+        info_window.title("Информация из файла")
+        info_window.geometry("1000x500")
+        info_table = tk.Text(info_window, height=30, width=100)
+        info_table.insert(tk.END, data.to_string(index=False))
+        info_table.pack()
+
+    def max_tourists():
+        file = pd.read_excel('число въездных поездок в Россию.xlsx')
+        df = pd.DataFrame(file)
+        name = df.iloc[1:-1, 0]  # срез для выделения имен стран
+        tourists = df.iloc[1:-1, 1:-1]
+        max_tourists = 0
+        max_tourists_country = ''
+        max_tourists_year = ''
+        for i in range(tourists.shape[0]):
+            for j in range(tourists.shape[1]):
+                if pd.to_numeric(tourists.iloc[i, j], errors='coerce') >= max_tourists:
+                    max_tourists = pd.to_numeric(tourists.iloc[i, j], errors='coerce')
+                    max_tourists_country = name.iloc[i]  # использование .iloc[i] для получения имени страны
+                    max_tourists_year = str(tourists.columns[j])
+        result_str = f'Больше всего туристов ({max_tourists}) приезжало из {max_tourists_country} в {max_tourists_year} году'
+        result_window = tk.Toplevel(root)
+        result_window.title("Результат")
+        result_window.geometry("500x100")
+        result_label = tk.Label(result_window, text=result_str, font=("Arial", 12))
+        result_label.pack(pady=20)
