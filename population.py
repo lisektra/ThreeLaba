@@ -17,12 +17,15 @@ def select_file():
 
 # построение графиков для каждого субъекта
 def DiagramData():
+    plt.figure(figsize=(11, 6))  # Установка размера окна графика (ширина, высота)
     for i, row in data.iterrows():
         plt.plot(row.index[1:], row[1:], label=row[0])
     plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
     plt.xlabel('Год')
     plt.ylabel('Численность населения')
     plt.title('Динамика численности населения по субъектам РФ')
+    plt.get_current_fig_manager().window.state('zoomed')
+    plt.tight_layout()
     plt.show()
 
 # поиск субъекта с наибольшим снижением численности населения
